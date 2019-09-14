@@ -9,7 +9,7 @@ public class LogLow : MonoBehaviour
     public Rigidbody rbLeft;
     public Rigidbody rbRight;
     public float launchAmount;
-    private ParticleSystem woodParticle;
+    ParticleSystem woodParticle;
     // Start is called before the first frame update
     void Start()
     {
