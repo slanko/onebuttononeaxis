@@ -44,7 +44,8 @@ public class vehicleScript : MonoBehaviour
     {
         healthText.text = "car health: " + carHealthCurrent.ToString();
         speedSlider.value = transform.InverseTransformDirection(rb.velocity).z * 2f;
-        if(carHealthCurrent > 0)
+        healthSlider.value = Mathf.Lerp(healthSlider.value, carHealthCurrent, 0.05f);
+        if (carHealthCurrent > 0)
         {
             if (Input.GetKey(accelerator))
             {
@@ -99,7 +100,6 @@ public class vehicleScript : MonoBehaviour
                 print("crash magnitude: " + other.relativeVelocity.magnitude);
                 var emission = bonnetParticles.emission;
                 emission.rateOverTime = (carHealthStart - carHealthCurrent) / emissionDiv;
-                healthSlider.value = Mathf.Lerp(healthSlider.value, carHealthCurrent, 0.5f);
                 if(carHealthCurrent < damageInterval)
                 {
                     nextDamageObject();
