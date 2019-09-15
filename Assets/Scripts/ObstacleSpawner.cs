@@ -5,7 +5,7 @@ using UnityEngine;
 public class ObstacleSpawner : MonoBehaviour
 {
     public GameObject obstacle;
-    private bool goLog;
+    public bool goLog;
 
     // Start is called before the first frame update
     void Start()
