@@ -4,21 +4,22 @@ using UnityEngine;
 
 public class deerscript : MonoBehaviour
 {
-
-    float health = 20;
+    Rigidbody rb;
+    public float health = 20;
     public GameObject bloodSplatter;
     // Start is called before the first frame update
     void Start()
     {
-        
+        rb = GetComponent<Rigidbody>();
+        rb.AddForce(transform.forward * 12.5f, ForceMode.Impulse);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnCollisionEnter(Collision collision)
     {
-        if(health <= 0)
+        if(collision.relativeVelocity.magnitude > health)
         {
-            Instantiate(bloodSplatter, transform.position, transform.rotation);
+            //Instantiate(bloodSplatter, transform.position, new Quaternion(90,0,0,0));
+            Destroy(gameObject);
         }
     }
 }

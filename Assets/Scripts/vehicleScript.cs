@@ -2,31 +2,34 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class vehicleScript : MonoBehaviour
 {
-    ParticleSystem bonnetParticles;
+    ParticleSystem bonnetParticles, bloodSplatter;
     Rigidbody rb, rb2;
     Animator anim;
     AudioSource aud, engAud;
     GameObject steeringWheel, orbitalCamera, gameOverText;
+    public GameObject splatters;
     public GameObject[] damageObjects;
     Slider healthSlider, speedSlider;
     public KeyCode accelerator, brake, turnleft, turnright;
     public float accelAmount, turnForce, carHealthStart, carHealthCurrent, damageThreshold, medCrashSoundThreshold, bigCrashSoundThreshold, emissionDiv;
     float damageInterval = 600, engineNoiseMin = 1, engineNoiseMax = 3;
-    Text healthText;
+    //Text healthText;
     public AudioClip[] smallCrashes, medCrashes, bigCrashes, glassBreakSounds;
     int damageIndex = 0;
     // Start is called before the first frame update
     void Start()
     {
+        bloodSplatter = GameObject.Find(transform.name + "/Splatter").GetComponent<ParticleSystem>();
         engAud = GameObject.Find(transform.name + "/SteeringCube").GetComponent<AudioSource>();
         bonnetParticles = GameObject.Find(transform.name + "/BonnetSmoke").GetComponent<ParticleSystem>();
         gameOverText = GameObject.Find("Canvas/GameOver");
         orbitalCamera = GameObject.Find("OrbitalCamera/Camera");
         aud = GetComponent<AudioSource>();
-        healthText = GameObject.Find("Canvas/healthText").GetComponent<Text>();
+        //healthText = GameObject.Find("Canvas/healthText").GetComponent<Text>();
         carHealthCurrent = carHealthStart;
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
@@ -42,9 +45,13 @@ public class vehicleScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        healthText.text = "car health: " + carHealthCurrent.ToString();
+        //healthText.text = "car health: " + carHealthCurrent.ToString();
         speedSlider.value = transform.InverseTransformDirection(rb.velocity).z * 2f;
         healthSlider.value = Mathf.Lerp(healthSlider.value, carHealthCurrent, 0.05f);
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene("menu");
+        }
         if (carHealthCurrent > 0)
         {
             if (Input.GetKey(accelerator))
@@ -94,7 +101,7 @@ public class vehicleScript : MonoBehaviour
         if (other.relativeVelocity.magnitude > damageThreshold)
         {
 
-            if (other.gameObject.tag == "Obstacle")
+            if (other.gameObject.tag == "Obstacle" || other.gameObject.tag == "Deer")
             {
                 carHealthCurrent = carHealthCurrent - other.relativeVelocity.magnitude;
                 print("crash magnitude: " + other.relativeVelocity.magnitude);
@@ -121,6 +128,11 @@ public class vehicleScript : MonoBehaviour
                     }
                 }
             }
+        }
+        if(other.relativeVelocity.magnitude >= 20 && other.gameObject.tag == "Deer")
+        {
+            splatters.SetActive(true);
+            bloodSplatter.Play();
         }
     }
 
