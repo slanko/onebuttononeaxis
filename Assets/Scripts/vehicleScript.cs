@@ -35,8 +35,8 @@ public class vehicleScript : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb2 = GameObject.Find(transform.name + "/SteeringCube").GetComponent<Rigidbody>();
         steeringWheel = GameObject.Find(transform.name + "/SteeringWheel");
-        healthSlider = GameObject.Find(transform.name + "/MeterArea/Canvas/Slider").GetComponent<Slider>();
-        speedSlider = GameObject.Find(transform.name + "/MeterArea/Canvas/speedSlider").GetComponent<Slider>(); orbitalCamera.SetActive(false);
+        healthSlider = GameObject.Find(transform.name + "/Canvas2/Slider").GetComponent<Slider>();
+        speedSlider = GameObject.Find(transform.name + "/Canvas2/speedSlider").GetComponent<Slider>(); orbitalCamera.SetActive(false);
         gameOverText.SetActive(false);
         var emission = bonnetParticles.emission;
         emission.rateOverTime = 0;
