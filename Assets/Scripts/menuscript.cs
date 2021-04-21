@@ -13,6 +13,6 @@ public class menuscript : MonoBehaviour
 
     public void loadGame()
     {
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("SampleScene - Copy");
     }
 }

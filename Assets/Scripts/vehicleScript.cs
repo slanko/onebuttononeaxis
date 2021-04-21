@@ -43,7 +43,7 @@ public class vehicleScript : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         //healthText.text = "car health: " + carHealthCurrent.ToString();
         speedSlider.value = transform.InverseTransformDirection(rb.velocity).z * 2f;
